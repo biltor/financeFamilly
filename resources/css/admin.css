@@ -1,0 +1,17 @@
+.fi-btn-primary {
+    background-image: linear-gradient(
+        135deg,
+        #6B2C91,
+        #E34C86,
+        #F47C4D
+    );
+    border: none;
+}
+
+.fi-badge-primary {
+    background-image: linear-gradient(
+        135deg,
+        #4B3C88,
+        #E34C86
+    );
+}
