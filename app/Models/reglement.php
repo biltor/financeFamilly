@@ -10,7 +10,7 @@ class reglement extends Model
 
     public function projet()
     {
-        return $this->belongsTo(Projet::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function caisse()
