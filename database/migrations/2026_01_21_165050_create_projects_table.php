@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('title');                     // Nom du projet
-            $table->enum('currency', ['DZD', 'EUR'])->default('DZD'); // Devise principale
+            $table->string('title');                    
             $table->decimal('montant_total', 15, 2)->default(0);    // Somme totale
             $table->enum('statut', ['en_cours', 'terminé', 'annulé'])->default('en_cours');
             $table->timestamps();

@@ -19,7 +19,7 @@ class FonctionResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string  $navigationGroup = 'Configuration';
+    protected static ?string  $navigationGroup = 'CRM';
 
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
 

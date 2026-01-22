@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class project extends Model
 {
-    protected $fillable = ['title', 'currency', 'montant_total', 'statut'];
+    protected $fillable = ['title',  'montant_total', 'statut'];
 
 
 

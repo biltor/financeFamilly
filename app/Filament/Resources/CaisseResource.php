@@ -18,7 +18,7 @@ class CaisseResource extends Resource
     protected static ?string $model = Caisse::class;
 
 
-    protected static ?string  $navigationGroup = 'Configuration';
+    protected static ?string  $navigationGroup = 'Comptabilité';
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 

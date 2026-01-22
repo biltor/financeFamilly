@@ -23,11 +23,12 @@ use Filament\Tables\Columns\BadgeColumn;
 class ExchangeResource extends Resource
 {
     protected static ?string $model = exchange::class;
+    protected static ?string $pluralModelLabel = 'Exchanges /Transfer';
 
     protected static ?int $navigationSort = 1;
 
 
-    protected static ?string  $navigationGroup = 'Operations';
+    protected static ?string  $navigationGroup = 'Comptabilité';
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
