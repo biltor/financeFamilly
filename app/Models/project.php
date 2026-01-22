@@ -12,7 +12,7 @@ class project extends Model
 
     public function reglements()
     {
-        return $this->hasMany(Reglement::class);
+        return $this->hasMany(reglement::class);
     }
 
     // Calcul du montant total payé

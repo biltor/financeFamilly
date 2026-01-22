@@ -56,7 +56,28 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                                Tables\Columns\TextColumn::make('title')
+                    ->label('Titre')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('montant_total')
+                    ->label('Montant total')
+                    ->money('DZD')
+                    ->sortable(),
+
+                Tables\Columns\BadgeColumn::make('statut')
+                    ->label('Statut')
+                    ->colors([
+                        'warning' => 'en_cours',
+                        'success' => 'terminé',
+                        'danger' => 'annulé',
+                    ]),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Créé le')
+                    ->date()
+                    ->sortable(),
             ])
             ->filters([
                 //

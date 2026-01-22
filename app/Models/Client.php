@@ -21,4 +21,11 @@ class Client extends Model
     {
         return $this->hasMany(Caisse::class);
     }
+
+    public function scopeNonFamille($query)
+    {
+        return $query->whereHas('fonction', function ($q) {
+            $q->where('name', '!=', 'famille');
+        });
+    }
 }

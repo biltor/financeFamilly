@@ -18,8 +18,6 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->cascadeOnDelete();
             $table->decimal('montant', 15, 2);           // Montant de la tranche
             $table->enum('devise', ['DZD', 'EUR'])->default('DZD'); 
-
-
             $table->date('date_reglement')->default(now());
             $table->string('description')->nullable();
             $table->timestamps();

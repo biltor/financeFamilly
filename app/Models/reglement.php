@@ -6,15 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class reglement extends Model
 {
-    protected $fillable = ['projet_id', 'caisse_id', 'montant', 'devise', 'date_reglement', 'description'];
+    protected $fillable = [
+        'project_id',
+        'caisse_id',
+        'client_id',
+        'montant',
+        'devise',
+        'date_reglement',
+        'description',
+    ];
 
-    public function projet()
+    public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(project::class);
     }
 
     public function caisse()
     {
         return $this->belongsTo(Caisse::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
