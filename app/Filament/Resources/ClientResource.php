@@ -42,7 +42,8 @@ class ClientResource extends Resource
                         fn($query) => $query->whereDoesntHave('client')
                     )
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->nullable(),
 
             ]);
     }
