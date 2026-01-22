@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Client extends Model
 {
     protected $fillable = [
@@ -12,12 +13,17 @@ class Client extends Model
         'fonction_id'
     ];
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function fonction(): BelongsTo
     {
         return $this->belongsTo(fonction::class);
     }
-    
-        public function Caisse(): HasMany
+
+    public function Caisse(): HasMany
     {
         return $this->hasMany(Caisse::class);
     }

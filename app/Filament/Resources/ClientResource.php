@@ -34,6 +34,18 @@ class ClientResource extends Resource
                     ->relationship('fonction', 'name')
                     ->required(),
 
+                Forms\Components\Section::make('Utilisateur')
+                    ->schema([
+                        Forms\Components\TextInput::make('user.name')
+                            ->label('Nom utilisateur')
+                            ->disabled(),
+
+                        Forms\Components\TextInput::make('user.email')
+                            ->label('Email')
+                            ->disabled(),
+                    ])
+                    ->visible(fn($record) => $record->user !== null),
+
             ]);
     }
 

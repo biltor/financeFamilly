@@ -50,10 +50,10 @@ class ReglementResource extends Resource
 
                         Forms\Components\Select::make('caisse_id')
                             ->options(function ($get) {
-                                    $clientId = $get('client_id');
-                                    if (!$clientId) return []; // aucun client choisi
-                                            return \App\Models\Caisse::where('client_id', $clientId)
-                                        ->pluck('title', 'id');
+                                $clientId = $get('client_id');
+                                if (!$clientId) return []; // aucun client choisi
+                                return \App\Models\Caisse::where('client_id', $clientId)
+                                    ->pluck('title', 'id');
                             })
                             ->required(),
                     ])->columns(3),
@@ -81,7 +81,35 @@ class ReglementResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('project.title')
+                    ->label('Projet')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('client.name')
+                    ->label('Client')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('caisse.title')
+                    ->label('Caisse')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('montant')
+                    ->label('Montant')
+                    ->money('DZD', true) // adapte si multi-devise
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('date_reglement')
+                    ->label('Date')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('Description')
+                    ->limit(40)
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
