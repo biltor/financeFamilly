@@ -33,11 +33,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+
     protected function casts(): array
     {
         return [
@@ -45,9 +41,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        // Le 2ème argument 'user_id' est INDISPENSABLE
+        return $this->hasOne(Client::class, 'user_id');
     }
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+
+
+
+
+    /**
+ * Scope : Utilisateurs sans client
+ */
+
 }
