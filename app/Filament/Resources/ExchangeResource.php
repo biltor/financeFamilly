@@ -45,8 +45,8 @@ class ExchangeResource extends Resource
                     Forms\Components\Select::make('type_operation')
                         ->label("Type d'opération")
                         ->options([
-                            'trans' => 'Transfert',
-                            'exch'  => 'Exchange',
+                            'transfert' => 'Transfert',
+                            'exchange'  => 'Exchange',
                         ])
                         ->required(),
                     Forms\Components\Select::make('caisse_src_id')

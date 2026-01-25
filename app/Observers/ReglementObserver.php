@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\reglement;
+use App\Services\ReglementService;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -13,7 +14,7 @@ class ReglementObserver
      */
     public function created(reglement $reglement): void
     {
-      
+      app(ReglementService::class)->handleReglement($reglement);
     }
 
     /**

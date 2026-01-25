@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('exchanges', function (Blueprint $table) {
             $table->id();
-            //$table->enum('type_operation', ['e', 't']);
+            $table->enum('type_operation', ['exchange', 'transfert']);
             $table->foreignId('caisse_src_id')->constrained('caisses')->cascadeOnDelete();
             $table->decimal('montant', 15, 2);
             $table->enum('currency_src', ['DZD', 'EUR'])->default('DZD');

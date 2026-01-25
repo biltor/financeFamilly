@@ -3,51 +3,48 @@
 namespace App\Services;
 
 use App\Models\reglement;
+use App\Models\Caisse;
 use App\Models\mouvement_caisse;
 use Illuminate\Support\Facades\Auth;
+use Exception;
+
 
 
 class ReglementService
 {
-    public function handle(reglement $reglement): void
+public function handleReglement(Reglement $reglement): void
     {
+       $user = Auth::user();
 
-        $user = Auth::user();
-
-        if (! $user) {
-            return;
+        if (!$user) {
+            throw new Exception("Utilisateur non authentifié.");
         }
 
-        // caisse DZD uniquement
-        $caisse = $user->client->Caisse()
-            ->where('devise', 'DZD')
-            ->first();
+        /**
+         * Logique : 
+         * 1. On cherche une caisse qui appartient à un client
+         * 2. Ce client doit être lié à l'utilisateur connecté (user_id sur la table clients)
+         * 3. La caisse doit correspondre à la devise du règlement
+         */
+        $caisse = Caisse::whereHas('client', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+        ->where('devise', $reglement->devise)
+        // ->where('is_active', true) // À décommenter si vous avez ce champ
+        ->first();
 
-        if (! $caisse) {
-            throw new \Exception('Aucune caisse DZD trouvée pour cet utilisateur');
+        if (!$caisse) {
+            throw new Exception("Aucune caisse trouvée pour vos clients en {$reglement->devise}.");
         }
-        // ➖ SORTIE caisse source
+
+        // Création du mouvement
         mouvement_caisse::create([
-            'caisse_id'  => $caisse,
-            'type'       => 'debit',
-            'montant'    => $reglement->montant,
-            'devise'     => $reglement->currency_src,
-            'date_mouv'  => $reglement->date_change,
-            'description' => 'reglement',
-
+            'caisse_id'   => $caisse->id,
+            'type'        => 'credit',
+            'montant'     => $reglement->montant,
+            'devise'      => $reglement->devise,
+            'date_mouv'   => $reglement->date_reglement,
+            'description' => "Règlement Client: {$reglement->client->nom} (Encaissé par: {$user->name})",
         ]);
-
-        // ➕ ENTRÉE (exchange ou transfert)
-        if ($exchange->currency_src !== $exchange->currency_dest) {
-            mouvement_caisse::create([
-                'caisse_id'  => $exchange->caisse_dest_id,
-                'type'       => 'credit',
-                'montant'    => $exchange->montant * $exchange->taux,
-                'devise'     => $exchange->currency_dest,
-                'date_mouv'  => $exchange->date_change,
-                'description' => ucfirst($source) . ' - crédit',
-                'exchange_id' => $exchange->id,
-            ]);
-        }
     }
 }
