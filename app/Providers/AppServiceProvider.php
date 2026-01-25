@@ -5,7 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Services\ChangeDeviseService;
 use App\Models\exchange;
+use App\Models\reglement;
 use App\Observers\ExchangeObserver;
+use App\Observers\ReglementObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-//
+        //
     }
 
     /**
@@ -23,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-            exchange::observe(ExchangeObserver::class);
-
+        exchange::observe(ExchangeObserver::class);
+        reglement::observe(ReglementObserver::class);
     }
 }
