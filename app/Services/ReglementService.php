@@ -35,7 +35,7 @@ public function handleReglement(Reglement $reglement): void
 
         if (!$caisse) {
             throw new Exception("Aucune caisse trouvée pour vos clients en {$reglement->devise}.");
-        }
+        } 
 
         // Création du mouvement sorti
         mouvement_caisse::create([
