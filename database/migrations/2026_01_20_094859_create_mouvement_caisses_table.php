@@ -29,7 +29,7 @@ return new class extends Migration
             $table->enum('devise', ['DZD', 'EUR']);
             $table->string('description')->nullable();
             $table->date('date_mouv')->default(Date::now());
-            $table->foreignId('exchange_id')->constrained()->nullable()->cascadeOnDelete();
+            $table->foreignId(column: 'exchange_id')->constrained()->nullable()->cascadeOnDelete();
             $table->timestamps();
         });
     }

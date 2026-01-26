@@ -29,22 +29,32 @@ public function handleReglement(Reglement $reglement): void
         $caisse = Caisse::whereHas('client', function($query) use ($user) {
             $query->where('user_id', $user->id);
         })
-        ->where('devise', $reglement->devise)
-        // ->where('is_active', true) // À décommenter si vous avez ce champ
+        //->where('devise', 'DZD')
+         //->where('is_active', true) // À décommenter si vous avez ce champ
         ->first();
 
         if (!$caisse) {
             throw new Exception("Aucune caisse trouvée pour vos clients en {$reglement->devise}.");
         }
 
-        // Création du mouvement
+        // Création du mouvement sorti
         mouvement_caisse::create([
             'caisse_id'   => $caisse->id,
+            'type'        => 'debit',
+            'montant'     => $reglement->montant,
+            'devise'      => 'DZD',
+            'date_mouv'   => $reglement->date_reglement,
+            'description' => "Règlement Client: {$reglement->client->name} (Encaissé par: {$user->name})",
+        ]);
+
+        // Création du mouvement entrer
+        mouvement_caisse::create([
+            'caisse_id'   => $reglement->caisse_id,
             'type'        => 'credit',
             'montant'     => $reglement->montant,
-            'devise'      => $reglement->devise,
+            'devise'      => 'DZD',
             'date_mouv'   => $reglement->date_reglement,
-            'description' => "Règlement Client: {$reglement->client->nom} (Encaissé par: {$user->name})",
+            'description' => "Règlement Client: {$reglement->client->name} (Encaissé par: {$user->name})",
         ]);
     }
 }
