@@ -13,6 +13,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\Action;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReglementResource extends Resource
 {
@@ -116,6 +118,18 @@ class ReglementResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('Générer Bon de Reçu')
+                    ->icon('heroicon-o-document')
+                    ->action(function ($record) {
+                        $pdf = Pdf::loadView('pdf.bon_recu_deux_parties', ['tranche' => $record])
+                            ->setPaper('a4', 'landscape');
+
+                        return response()->streamDownload(
+                            fn() => print($pdf->output()),
+                            "bon_recu_tranche_{$record->id}.pdf"
+                        );
+                    })
+                    ->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
