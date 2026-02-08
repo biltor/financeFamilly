@@ -3,110 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            border: 1px dashed #000;
-            padding: 20px;
-            width: 750px;
-            margin: auto;
-            font-size: 16px;
+        @page {
+            size: 21cm 10cm;
+            margin: 0.5cm;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        body {
+            font-family: Arial, sans-serif;
+            width: 21cm;
+            height: 10cm;
+            margin: 0;
+            padding: 0.5cm;
+            font-size: 13px;
+            border: 1px solid #000;
+            box-sizing: border-box;
         }
 
         .title {
+            text-align: center;
             font-weight: bold;
-            font-size: 24px;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            vertical-align: top;
+            padding: 4px 0;
+        }
+
+        .label {
+            width: 10%;
+        }
+
+        .amount {
+            width: 30%;
+            text-align: right;
         }
 
         .amount-box {
             border: 2px solid #000;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 6px 10px;
             font-weight: bold;
+            font-size: 15px;
+            display: inline-block;
             min-width: 150px;
             text-align: center;
         }
 
-        .row {
-            margin: 20px 0;
+        .signature {
+            margin-top: 30px;
+            width: 100%;
         }
 
         .line {
             border-bottom: 1px solid #000;
             display: inline-block;
-            min-width: 420px;
-            padding-bottom: 3px;
-        }
-
-        .footer {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .footer .block {
-            width: 45%;
-        }
-
-        .signature-line {
-            border-bottom: 1px solid #000;
-            width: 200px;
-            margin-top: 40px;
+            width: 220px;
         }
     </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
+<div class="title">BON DE RÉCEPTION</div>
 
+<table>
+    <tr>
+        <td class="label">
+            <strong>Montant:</strong>
+        </td>
+        <td class="amount">
+            <div class="amount-box">
+                {{ number_format($tranche->montant,2) }}  DA
+            </div>
+        </td>
+    </tr>
 
-    <div class="amount-box">
-        {{ number_format($tranche->montant, 2) }} DA
-    </div>
-</div>
+    <tr>
+        <td colspan="2">
+            <strong>Montant (lettres) :</strong>
+            quarante million de centime
+        </td>
+    </tr>
 
-<div>
-        <div class="title">
-        REÇU DE M {{ $tranche->client->name }}
-    </div>
-</div>
+    <tr>
+        <td colspan="2">
+            <strong>Reçu par :</strong>
+            {{ $tranche->client->name }}
+        </td>
+    </tr>
 
-<!-- CONTENT -->
-<div class="row">
+    <tr>
+        <td colspan="2">
+            <strong>Date :</strong>
+           {{ $tranche->date_reglement }}
+        </td>
+    </tr>
+</table>
 
-    La somme de :
-    <span class="line">
-        {{ $montantEnLettres ?? '................................................' }}
-    </span>
-</div>
-
-<div class="row">
-    Pour :
-    <span class="line">
-        {{ $tranche->project->title }}
-    </span>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-    <div class="block">
-        Le :
-        <span class="line" style="min-width: 200px;">
-            {{ $tranche->date_reglement }}
-        </span>
-
-        <div style="margin-top: 30px;">
-            Signature :
-            <div class="signature-line"></div>
-        </div>
-    </div>
+<div class="signature">
+    <strong>Signature :</strong>
+    <span class="line"></span>
 </div>
 
 </body>

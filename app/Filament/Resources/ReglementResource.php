@@ -122,7 +122,7 @@ class ReglementResource extends Resource
                     ->icon('heroicon-o-document')
                     ->action(function ($record) {
                         $pdf = Pdf::loadView('pdf.bon_recu_deux_parties', ['tranche' => $record])
-                            ->setPaper('a4', 'landscape');
+                            ->setPaper([0, 0, 595, 113]);
 
                         return response()->streamDownload(
                             fn() => print($pdf->output()),
